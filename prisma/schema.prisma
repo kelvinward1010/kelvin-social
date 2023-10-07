@@ -13,12 +13,18 @@ datasource db {
 model User {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String?
+  username        String?   @unique
   email          String?   @unique
   emailVerified  DateTime?
   image          String?
+  bio            String?
+  coverImage     String?
+  profileImage   String?
   hashedPassword String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+  followingIds    String[] @db.ObjectId
+  hasNotification Boolean?
 
   conversationIds String[]       @db.ObjectId
   conversations   Conversation[] @relation(fields: [conversationIds], references: [id])
@@ -28,6 +34,9 @@ model User {
 
   accounts Account[]
   messages Message[]
+  posts         Post[]
+  comments      Comment[]
+  notifications Notification[]
 }
 
 model Account {
@@ -77,4 +86,39 @@ model Message {
 
   senderId String @db.ObjectId
   sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+model Post {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  body               String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  userId             String   @db.ObjectId
+  likedIds           String[] @db.ObjectId
+  image              String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  comments          Comment[]
+}
+
+model Comment {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId 
+  body               String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  userId             String @db.ObjectId
+  postId             String @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId 
+  body               String
+  userId             String @db.ObjectId
+  createdAt          DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
