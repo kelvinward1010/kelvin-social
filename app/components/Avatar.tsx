@@ -16,6 +16,8 @@ const Avatar: React.FC<AvatarProps> = ({
 }) => {
 
     const router = useRouter();
+    // const { data: fetchedUser } = useUser(user?.id);
+    
 
     return (
         <div

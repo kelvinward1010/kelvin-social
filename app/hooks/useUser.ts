@@ -1,5 +1,5 @@
-import useSWR from 'swr';
-
+"use client"
+import useSWR from 'swr'
 import fetcher from '@/app/libs/fetcher';
 
 const useUser = (userId: string) => {

@@ -1,0 +1,116 @@
+"use client"
+import getUserById from "@/app/actions/getUserById";
+import Avatar from "@/app/components/Avatar";
+import useUser from "@/app/hooks/useUser";
+import { useRouter } from "next/navigation";
+import { useCallback, useMemo } from "react";
+import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
+
+
+interface PostItemProps {
+    data: Record<string, any>;
+    userId?: string;
+    user?: any
+}
+
+const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
+
+    const router = useRouter();
+    const t = useUser(userId as string)
+    console.log(t)
+
+    const goToUser = useCallback((ev: any) => {
+        
+    }, []);
+
+    const goToPost = useCallback(() => {
+        
+    }, []);
+
+    const onLike = useCallback(async (ev: any) => {
+        
+    }, []);
+
+    // const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
+
+    const createdAt = useMemo(() => {
+
+    }, [])
+
+    return (
+        <div
+            className="
+                border-b-[1px]
+                border-neutral-800
+                p-5
+                cursor-pointer
+                hover:bg-neutral-900
+                trasition
+            "
+            onClick={goToPost}
+        >
+            <div className="flex flex-row items-start gap-3">
+                <Avatar user={user} />
+                <div>
+                    <div className="flex flex-row items-center gap-2">
+                        <p
+                            onClick={goToUser}
+                            className="text-white font-semibold cursor-pointer hover:underline"
+                        >
+                            {user.name}
+                        </p>
+                        <span
+                            onClick={goToUser}
+                            className="text-neutral-500 cursor-pointer hover:underline hidden md:block"
+                        >
+                             @{user.username}
+                        </span>
+                        <span className="text-neutral-500 text-sm">
+                            10/10/2023
+                        </span>
+                    </div>
+                    <div className="text-white mt-1">
+                        Ok Test content
+                    </div>
+                    <div className="flex flex-row items-center mt-3 gap-10">
+                        <div className="
+                            flex 
+                            flex-row 
+                            items-center 
+                            text-neutral-500 
+                            gap-2 
+                            cursor-pointer 
+                            transition 
+                            hover:text-sky-500
+                        ">
+                            <AiOutlineMessage size={20} />
+                            <p>
+                                0
+                            </p>
+                        </div>
+                        <div
+                            onClick={onLike}
+                            className="
+                                flex 
+                                flex-row 
+                                items-center 
+                                text-neutral-500 
+                                gap-2 
+                                cursor-pointer 
+                                transition 
+                                hover:text-red-500
+                            "
+                        >
+                            {/* <LikeIcon color={hasLiked ? 'red' : ''} size={20} /> */}
+                            <p>
+                                {/* {data.likedIds.length} */}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default PostItem;
