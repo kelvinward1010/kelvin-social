@@ -2,20 +2,19 @@ import axios from "axios";
 import { useCallback, useMemo } from "react";
 import { toast } from "react-hot-toast";
 
-import getPostById from "../actions/getPostById";
-import getPosts from "../actions/getPosts";
-import getCurrentUser from "../actions/getCurrentUser";
+import useCurrentUser from "./useCurrentUser";
+import usePost from "./usePost";
+import usePosts from "./usePosts";
 
-const useLike = async ({ postId, userId }: { postId: string, userId?: string }) => {
-  const currentUser = await getCurrentUser();
-  const fetchedPost = await getPostById(postId);
-  const mutateFetchedPosts = await getPosts(userId);
-
+const useLike = ({ postId, userId }: { postId: string, userId?: string }) => {
+  const { data: currentUser } = useCurrentUser();
+  const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
+  const { mutate: mutateFetchedPosts } = usePosts(userId);
 
   const hasLiked = useMemo(() => {
     const list = fetchedPost?.likedIds || [];
 
-    return list.includes(currentUser?.id as string);
+    return list.includes(currentUser?.id);
   }, [fetchedPost, currentUser]);
 
   const toggleLike = useCallback(async () => {
@@ -24,18 +23,20 @@ const useLike = async ({ postId, userId }: { postId: string, userId?: string }) 
       let request;
 
       if (hasLiked) {
-        request = () => axios.delete('/api/like/[likeId]', { data: { postId } });
+        request = () => axios.delete('/api/like', { data: { postId } });
       } else {
         request = () => axios.post('/api/like', { postId });
       }
 
       await request();
+      mutateFetchedPost();
+      mutateFetchedPosts();
 
       toast.success('Success');
     } catch (error) {
       toast.error('Something went wrong');
     }
-  }, [currentUser, hasLiked, postId]);
+  }, [currentUser, hasLiked, postId, mutateFetchedPosts, mutateFetchedPost]);
 
   return {
     hasLiked,

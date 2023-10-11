@@ -14,8 +14,6 @@ const PostFeed: React.FC<PostFeedProps> = async ({userId}) => {
 
     const user = await getUserById(userId);
     const posts = await getPosts();
-
-    const bottomRef = useRef<HTMLDivElement>(null);
     
     return (
         <>
