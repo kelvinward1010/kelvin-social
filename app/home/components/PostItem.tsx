@@ -5,7 +5,8 @@ import useUser from "@/app/hooks/useUser";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
-
+import { formatDistanceToNowStrict } from 'date-fns';
+import useLike from "@/app/hooks/useLike";
 
 interface PostItemProps {
     data: Record<string, any>;
@@ -16,9 +17,9 @@ interface PostItemProps {
 const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
 
     const router = useRouter();
-    const t = useUser(userId as string)
-    console.log(t)
-
+    const userPost = useUser(data?.userId);
+    
+    
     const goToUser = useCallback((ev: any) => {
         
     }, []);
@@ -34,8 +35,12 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
     // const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
 
     const createdAt = useMemo(() => {
+        if (!data?.createdAt) {
+            return null;
+        }
 
-    }, [])
+        return formatDistanceToNowStrict(new Date(data.createdAt));
+    }, [data.createdAt])
 
     return (
         <div
@@ -50,7 +55,7 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
             onClick={goToPost}
         >
             <div className="flex flex-row items-start gap-3">
-                <Avatar user={user} />
+                <Avatar user={userPost} image={userPost?.data?.image} />
                 <div>
                     <div className="flex flex-row items-center gap-2">
                         <p
@@ -66,11 +71,11 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
                              @{user.username}
                         </span>
                         <span className="text-neutral-500 text-sm">
-                            10/10/2023
+                            {createdAt}
                         </span>
                     </div>
                     <div className="text-white mt-1">
-                        Ok Test content
+                        {data?.body}
                     </div>
                     <div className="flex flex-row items-center mt-3 gap-10">
                         <div className="
@@ -103,7 +108,7 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
                         >
                             {/* <LikeIcon color={hasLiked ? 'red' : ''} size={20} /> */}
                             <p>
-                                {/* {data.likedIds.length} */}
+                                {data.likedIds.length}
                             </p>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "./getCurrentUser";
 
-const getPosts = async () => {
+const getPosts = async (userId?: string) => {
     const currentUser = await getCurrentUser();
 
     if (!currentUser?.id) {
@@ -11,10 +11,10 @@ const getPosts = async () => {
     try {
         let posts;
 
-        if (currentUser?.id && typeof currentUser?.id === 'string') {
+        if (currentUser?.id && typeof currentUser?.id === 'string' && userId) {
             posts = await prisma.post.findMany({
                 where: {
-                    id: currentUser?.id
+                    userId: currentUser?.id
                 },
                 include: {
                     user: true,
@@ -26,10 +26,6 @@ const getPosts = async () => {
             });
         } else {
             posts = await prisma.post.findMany({
-                include: {
-                    user: true,
-                    comments: true
-                },
                 orderBy: {
                     createdAt: 'desc'
                 }

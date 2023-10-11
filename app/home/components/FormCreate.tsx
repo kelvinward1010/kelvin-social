@@ -4,10 +4,8 @@ import Avatar from "@/app/components/Avatar";
 import Button from "@/app/components/ButtonHome";
 import axios from "axios";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import usePost from "@/app/hooks/usePost";
 import toast from "react-hot-toast";
-import MessageInput from "./MessageInput";
-import { HiPaperAirplane } from "react-icons/hi2";
+import PostInput from "./InputPost";
 
 
 interface FormCreateProps {
@@ -42,39 +40,33 @@ const FormCreate: React.FC<FormCreateProps> = ({
         }
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const onSubmit: SubmitHandler<FieldValues> = useCallback(async (data) => {
+        setIsLoading(true);
         setValue('content', '', { shouldValidate: true });
-        axios.post('/api/posts', {
+        await axios.post('/api/posts', {
             ...data,
             postId: postId
+        }).catch((error) => {
+            toast.error("Something went wrong")
+        }).finally(() => {
+            setIsLoading(false);
+            toast.success('Post has been created successfully')
         })
-    }
+    },[handleSubmit, register, user, isComment])
 
     return (
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
             <div className="flex flex-row gap-4">
                 <div>
-                    <Avatar user={user} />
+                    <Avatar user={user} image={user?.image}/>
                 </div>
-                {/* <div className="w-full">
-                    <textarea
-                        disabled={isLoading}
-                        onChange={(event) => setBody(event.target.value)}
-                        value={body}
-                        className="
-                            disabled:opacity-80
-                            peer
-                            resize-none 
-                            mt-3 
-                            w-full 
-                            bg-black 
-                            ring-0 
-                            outline-none 
-                            text-[20px] 
-                            placeholder-neutral-500 
-                            text-white
-                        "
-                        placeholder={placeholder}
+                <div className="w-full">
+                    <PostInput
+                        id="content"
+                        register={register}
+                        errors={errors}
+                        required
+                        placeholder="What's happening..."
                     />
                     <hr
                         className="
@@ -86,37 +78,9 @@ const FormCreate: React.FC<FormCreateProps> = ({
                             transition"
                     />
                     <div className="mt-4 flex flex-row justify-end">
-                    <Button disabled={isLoading || !body} onClick={handleSubmit(onSubmit)} label="Tweet" />
+                    <Button disabled={isLoading} onClick={handleSubmit(onSubmit)} label="Tweet" />
                     </div>
-                </div> */}
-                <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="flex items-center gap-2 lg:gap-4 w-full"
-            >
-                    <MessageInput
-                        id="content"
-                        register={register}
-                        errors={errors}
-                        required
-                        placeholder="Write a message"
-                    />
-                    <button
-                        type="submit"
-                        className="
-                            rounded-full 
-                            p-2 
-                            bg-sky-500 
-                            cursor-pointer 
-                            hover:bg-sky-600 
-                            transition
-                        "
-                    >
-                        <HiPaperAirplane
-                            size={18}
-                            className="text-white"
-                        />
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
     )

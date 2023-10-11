@@ -7,18 +7,18 @@ interface AvatarProps {
     user: any;
     isLarge?: boolean;
     hasBorders?: boolean;
+    image?: string;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
     user,
     isLarge,
-    hasBorders
+    hasBorders,
+    image
 }) => {
 
     const router = useRouter();
-    // const { data: fetchedUser } = useUser(user?.id);
     
-
     return (
         <div
             className={`
@@ -40,7 +40,7 @@ const Avatar: React.FC<AvatarProps> = ({
                 }}
                 alt="Avatar"
                 onClick={() =>{}}
-                src={user?.image || '/images/placeholder.jpg'}
+                src={image || '/images/placeholder.jpg'}
             />
         </div>
     )

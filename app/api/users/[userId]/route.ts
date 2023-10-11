@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 
 interface IParams {
-    conversationId?: string;
+    userId?: string;
 }
 
 export async function GET(
@@ -20,7 +20,7 @@ export async function GET(
 
         const user = await prisma.user.findUnique({
             where: {
-                id: currentUser?.id
+                id: params.userId
             }
         });
 
