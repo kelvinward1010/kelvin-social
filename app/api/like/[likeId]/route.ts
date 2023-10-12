@@ -3,15 +3,24 @@ import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
 
+interface IParams {
+    postId?: string;
+}
+
 export async function DELETE(
-    request: Request
+    request: Request,
+    { params }: { params: IParams }
 ) {
     try {
         const currentUser = await getCurrentUser();
-        const postId = request.url;
+        const postId = request.body;
 
-        if (!currentUser?.id) {
-            return NextResponse.json(null);
+        if (!postId || typeof postId !== 'string') {
+            throw new Error('Invalid ID');
+        }
+
+        if (!currentUser?.id || !currentUser?.email) {
+            return new NextResponse('Unauthorized', { status: 401 });
         }
 
         const post = await prisma.post.findUnique({

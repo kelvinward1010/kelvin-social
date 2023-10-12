@@ -16,15 +16,7 @@ const getPostById = async (
                 id: postId
             },
             include: {
-                user: true,
-                comments: {
-                    include: {
-                        user: true
-                    },
-                    orderBy: {
-                        createdAt: 'desc'
-                    }
-                },
+                user: true
             },
         });
 

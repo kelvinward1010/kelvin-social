@@ -13,7 +13,7 @@ export async function GET(
 ) {
     try {
         const currentUser = await getCurrentUser();
-
+        
         if (!currentUser?.email) {
             return null;
         }

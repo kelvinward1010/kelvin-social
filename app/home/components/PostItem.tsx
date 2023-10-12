@@ -20,21 +20,22 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
     const userPost = useUser(data?.userId);
 
     const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
-    console.log(hasLiked)
+    
     
     const goToUser = useCallback((ev: any) => {
         
     }, []);
 
     const goToPost = useCallback(() => {
-        
-    }, []);
+        router.push(`/posts/${data.id}`);
+    }, [router, data?.id]);
 
     const onLike = useCallback(async (ev: any) => {
-        
-    }, []);
+        ev.stopPropagation();
+        toggleLike();
+    }, [toggleLike]);
 
-    // const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
+    const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
 
     const createdAt = useMemo(() => {
         if (!data?.createdAt) {
@@ -108,7 +109,7 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
                                 hover:text-red-500
                             "
                         >
-                            {/* <LikeIcon color={hasLiked ? 'red' : ''} size={20} /> */}
+                            <LikeIcon color={hasLiked ? 'red' : ''} size={20} />
                             <p>
                                 {data.likedIds.length}
                             </p>

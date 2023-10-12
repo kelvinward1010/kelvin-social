@@ -1,7 +1,7 @@
 import LayoutHome from "../components/LayoutHome"
 
 
-export default function HomePageLayout({
+export default function PostLayout({
     children
 }: {
     children: React.ReactNode

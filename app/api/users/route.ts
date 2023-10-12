@@ -5,7 +5,7 @@ import prisma from "@/app/libs/prismadb";
 import getSession from "@/app/actions/getSession";
 
 interface IParams {
-    conversationId?: string;
+    userId?: string;
 }
 
 export async function GET(

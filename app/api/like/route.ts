@@ -3,12 +3,19 @@ import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
+interface IParams {
+    postId?: string;
+}
+
 export async function POST(
     request: Request,
+    { params }: { params: IParams }
 ) {
     try {
         const currentUser = await getCurrentUser();
-        const postId = request.url;
+        const postId = params.postId;
+
+        console.log(request)
 
         if (!postId || typeof postId !== 'string') {
             throw new Error('Invalid ID');

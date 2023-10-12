@@ -1,5 +1,4 @@
 import getCurrentUser from "../actions/getCurrentUser";
-import getUserById from "../actions/getUserById";
 import FormCreate from "./components/FormCreate";
 import Header from "../components/Header";
 import PostFeed from "./components/FostFeed";
