@@ -13,9 +13,9 @@ export async function POST(
 ) {
     try {
         const currentUser = await getCurrentUser();
-        const postId = params.postId;
+        const postId = request.url;
 
-        console.log(request)
+        console.log(postId)
 
         if (!postId || typeof postId !== 'string') {
             throw new Error('Invalid ID');

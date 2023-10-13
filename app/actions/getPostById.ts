@@ -16,7 +16,8 @@ const getPostById = async (
                 id: postId
             },
             include: {
-                user: true
+                user: true,
+                comments: true
             },
         });
 

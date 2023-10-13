@@ -3,8 +3,12 @@ import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
+interface IParams {
+    userId?: string;
+}
+
 export async function POST(
-    request: Request,
+    request: Request
 ) {
     try {
         const currentUser = await getCurrentUser();
@@ -12,7 +16,6 @@ export async function POST(
         const {
             content
         } = body;
-
 
         if (!currentUser?.id || !currentUser?.email) {
             return new NextResponse('Unauthorized', { status: 401 });
@@ -33,10 +36,6 @@ export async function POST(
     }
 }
 
-interface IParams {
-    userId?: string;
-}
-
 export async function GET(
     request: Request,
     { params }: { params: IParams }
@@ -52,33 +51,15 @@ export async function GET(
         if (!currentUser?.id || !currentUser?.email) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
-
-        let posts;
-
-        if (currentUser?.id && typeof currentUser?.id === 'string' && params.userId) {
-            posts = await prisma.post.findMany({
-                where: {
-                    userId: currentUser?.id
-                },
-                include: {
-                    user: true,
-                    comments: true
-                },
-                orderBy: {
-                    createdAt: 'desc'
-                },
-            });
-        } else {
-            posts = await prisma.post.findMany({
-                include: {
-                    user: true,
-                    comments: true
-                },
-                orderBy: {
-                    createdAt: 'desc'
-                }
-            });
-        }
+        const posts = await prisma.post.findMany({
+            include: {
+                user: true,
+                comments: true
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
         
 
         return NextResponse.json(posts)

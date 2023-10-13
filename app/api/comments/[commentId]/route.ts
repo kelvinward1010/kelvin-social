@@ -1,31 +1,43 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-import serverAuth from "@/app/libs/serverAuth";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== 'POST') {
-        return res.status(405).end();
-    }
+interface IParams {
+    postId: string
+}
 
+export async function POST(
+    request: Request,
+    {params}: {params: IParams}
+) {
     try {
-        const { currentUser } = await serverAuth(req, res);
-        const { body } = req.body;
-        const { postId } = req.query;
+        const currentUser = await getCurrentUser();
+        const body = await request.json();
+        const postId = request.url.split('/')[5] as string;
+
 
         if (!postId || typeof postId !== 'string') {
             throw new Error('Invalid ID');
         }
 
-        const comment = await prisma.comment.create({
+        const {
+            content
+        } = body;
+
+
+        if (!currentUser?.id || !currentUser?.email) {
+            return new NextResponse('Unauthorized', { status: 401 });
+        }
+
+        const comments = await prisma.comment.create({
             data: {
-                body,
+                body: content,
                 userId: currentUser.id,
                 postId
             }
         });
 
-        // NOTIFICATION PART START
         try {
             const post = await prisma.post.findUnique({
                 where: {
@@ -54,11 +66,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         catch (error) {
             console.log(error);
         }
-        // NOTIFICATION PART END
+        
 
-        return res.status(200).json(comment);
+        return NextResponse.json(comments)
     } catch (error) {
-        console.log(error);
-        return res.status(400).end();
+        console.log(error, 'ERROR_MESSAGES')
+        return new NextResponse('Error', { status: 500 });
     }
 }

@@ -6,11 +6,13 @@ import axios from "axios";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import PostInput from "./InputPost";
+import usePosts from "@/app/hooks/usePosts";
+import usePost from "@/app/hooks/usePost";
 
 
 interface FormCreateProps {
     user: any;
-    placeholder: string;
+    placeholder?: string;
     isComment?: boolean;
     postId?: string;
 }
@@ -26,6 +28,8 @@ const FormCreate: React.FC<FormCreateProps> = ({
     const [isLoading, setIsLoading] = useState(false);
 
     // const { postId } = usePost();
+    const { mutate: mutatePosts } = usePosts();
+    const { mutate: mutatePost } = usePost(postId as string);
 
     const {
         register,
@@ -42,10 +46,14 @@ const FormCreate: React.FC<FormCreateProps> = ({
 
     const onSubmit: SubmitHandler<FieldValues> = useCallback(async (data) => {
         setIsLoading(true);
+        const url = isComment ? `/api/comments/${postId}` : '/api/posts';
         setValue('content', '', { shouldValidate: true });
-        await axios.post('/api/posts', {
+        await axios.post(url, {
             ...data,
             postId: postId
+        }).then(() => {
+            mutatePosts();
+            mutatePost();
         }).catch((error) => {
             toast.error("Something went wrong")
         }).finally(() => {
@@ -66,7 +74,7 @@ const FormCreate: React.FC<FormCreateProps> = ({
                         register={register}
                         errors={errors}
                         required
-                        placeholder="What's happening..."
+                        placeholder={placeholder}
                     />
                     <hr
                         className="
