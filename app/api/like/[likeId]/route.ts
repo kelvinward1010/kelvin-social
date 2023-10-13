@@ -13,7 +13,7 @@ export async function DELETE(
 ) {
     try {
         const currentUser = await getCurrentUser();
-        const postId = request.body;
+        const postId = request.url.split('/')[5] as string;
 
         if (!postId || typeof postId !== 'string') {
             throw new Error('Invalid ID');
@@ -37,7 +37,16 @@ export async function DELETE(
 
         updatedLikedIds = updatedLikedIds.filter((likedId) => likedId !== currentUser?.id);
 
-        return NextResponse.json(updatedLikedIds)
+        const updatedPost = await prisma.post.update({
+            where: {
+                id: postId
+            },
+            data: {
+                likedIds: updatedLikedIds
+            }
+        });
+
+        return NextResponse.json(updatedPost)
     } catch (error) {
         return NextResponse.json(null);
     }
@@ -51,8 +60,6 @@ export async function POST(
     try {
         const currentUser = await getCurrentUser();
         const postId = request.url.split('/')[5] as string;
-
-        console.log(postId)
 
         if (!postId || typeof postId !== 'string') {
             throw new Error('Invalid ID');

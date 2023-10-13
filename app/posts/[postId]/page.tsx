@@ -12,7 +12,7 @@ interface IParams {
 const Post = async ({ params }: { params: IParams }) => {
     const data = await getPostById(params.postId);
     const currentUser = await getCurrentUser();
-
+ 
     return (
         <>
             <Header showBackArrow label="Tweet" />

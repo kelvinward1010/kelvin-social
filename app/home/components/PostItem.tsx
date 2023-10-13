@@ -7,6 +7,7 @@ import { useCallback, useMemo } from "react";
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
 import { formatDistanceToNowStrict } from 'date-fns';
 import useLike from "@/app/hooks/useLike";
+import usePost from "@/app/hooks/usePost";
 
 interface PostItemProps {
     data: Record<string, any>;
@@ -20,11 +21,13 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
     const userPost = useUser(data?.userId);
 
     const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
-    
+    const post = usePost(data?.id);
     
     const goToUser = useCallback((ev: any) => {
-        
-    }, []);
+        ev.stopPropagation();
+
+        router.push(`/users/${userId}`)
+    }, [router, userId]);
 
     const goToPost = useCallback(() => {
         router.push(`/posts/${data.id}`);
@@ -44,7 +47,7 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
 
         return formatDistanceToNowStrict(new Date(data.createdAt));
     }, [data.createdAt])
-
+    
     return (
         <div
             className="
@@ -93,7 +96,7 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
                         ">
                             <AiOutlineMessage size={20} />
                             <p>
-                                0
+                                {post?.data?.comments?.length || 0}
                             </p>
                         </div>
                         <div

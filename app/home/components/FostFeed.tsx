@@ -2,8 +2,6 @@ import getUserById from "@/app/actions/getUserById";
 import PostItem from "./PostItem";
 import useUser from "@/app/hooks/useUser";
 import getPosts from "@/app/actions/getPosts";
-import getPostById from "@/app/actions/getPostById";
-import { useRef } from "react";
 import usePosts from "@/app/hooks/usePosts";
 
 

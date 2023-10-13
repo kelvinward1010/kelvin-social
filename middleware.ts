@@ -10,5 +10,6 @@ export const config = {
     matcher: [
         "/home/:path*",
         "/posts/:path*",
+        "/notifications/:path*",
     ]
 };

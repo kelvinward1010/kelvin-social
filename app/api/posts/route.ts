@@ -47,15 +47,11 @@ export async function GET(
             return [];
         }
 
-
         if (!currentUser?.id || !currentUser?.email) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
+        
         const posts = await prisma.post.findMany({
-            include: {
-                user: true,
-                comments: true
-            },
             orderBy: {
                 createdAt: 'desc'
             }

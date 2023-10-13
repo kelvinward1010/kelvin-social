@@ -36,7 +36,8 @@ const CommentItem: React.FC<CommentItemProps> = ({data ={}}) => {
         className="
             border-b-[1px] 
             border-neutral-800 
-            p-5 
+            p-5
+            pl-10
             cursor-pointer 
             hover:bg-neutral-900 
             transition

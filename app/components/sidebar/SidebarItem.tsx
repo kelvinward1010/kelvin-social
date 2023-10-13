@@ -8,7 +8,7 @@ interface SidebarItemProps {
     href?: string;
     onClick?: () => void;
     active?: boolean;
-
+    alert?: boolean;
 }
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
@@ -16,7 +16,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     icon: Icon,
     href,
     onClick,
-    active
+    active,
 }) => {
 
     const handleClick = () => {
