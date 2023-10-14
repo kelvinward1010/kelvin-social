@@ -49,7 +49,8 @@ export async function POST(
                 await prisma.notification.create({
                     data: {
                         body: `${currentUser?.name} replied on your tweet!`,
-                        userId: post.userId
+                        userId: post?.userId,
+                        postId: postId,
                     }
                 });
 

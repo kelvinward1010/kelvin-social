@@ -21,8 +21,6 @@ const NotificationsFeed = () => {
       </div>
     )
   }
-
-  console.log(fetchedNotifications)
   
   return ( 
     <div className="flex flex-col">

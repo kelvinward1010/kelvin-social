@@ -15,8 +15,6 @@ export async function POST(
         const currentUser = await getCurrentUser();
         const postId = request.url;
 
-        console.log(postId)
-
         if (!postId || typeof postId !== 'string') {
             throw new Error('Invalid ID');
         }
@@ -51,7 +49,8 @@ export async function POST(
                 await prisma.notification.create({
                     data: {
                         body: `${currentUser?.name} liked your tweet!`,
-                        userId: post.userId
+                        userId: post?.userId,
+                        postId: postId,
                     }
                 });
 

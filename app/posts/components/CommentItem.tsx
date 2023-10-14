@@ -25,7 +25,7 @@ const CommentItem: React.FC<CommentItemProps> = ({data ={}}) => {
 
     const createdAt = useMemo(() => {
         if (!data?.createdAt) {
-        return null;
+            return null;
         }
 
         return formatDistanceToNowStrict(new Date(data.createdAt));
