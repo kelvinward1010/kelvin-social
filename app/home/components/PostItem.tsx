@@ -1,5 +1,4 @@
 "use client"
-import getUserById from "@/app/actions/getUserById";
 import Avatar from "@/app/components/Avatar";
 import useUser from "@/app/hooks/useUser";
 import { useRouter } from "next/navigation";
@@ -68,13 +67,13 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
                             onClick={goToUser}
                             className="text-white font-semibold cursor-pointer hover:underline"
                         >
-                            {user.name}
+                            {userPost?.data?.name}
                         </p>
                         <span
                             onClick={goToUser}
                             className="text-neutral-500 cursor-pointer hover:underline hidden md:block"
                         >
-                             @{user.username}
+                             @{userPost?.data?.username}
                         </span>
                         <span className="text-neutral-500 text-sm">
                             {createdAt}
@@ -114,7 +113,7 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
                         >
                             <LikeIcon color={hasLiked ? 'red' : ''} size={20} />
                             <p>
-                                {data.likedIds.length}
+                                {post?.data?.likedIds.length}
                             </p>
                         </div>
                     </div>

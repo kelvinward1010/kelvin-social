@@ -10,6 +10,7 @@ export async function POST(
     const {
         email,
         name,
+        username,
         password
     } = body;
 
@@ -19,6 +20,7 @@ export async function POST(
         data: {
             email,
             name,
+            username,
             hashedPassword
         }
     });

@@ -45,10 +45,10 @@ export async function POST(
                 }
             });
 
-            if (post?.userId) {
+            if (post?.userId && (currentUser.id !== post.userId)) {
                 await prisma.notification.create({
                     data: {
-                        body: 'Someone replied on your tweet!',
+                        body: `${currentUser?.name} replied on your tweet!`,
                         userId: post.userId
                     }
                 });

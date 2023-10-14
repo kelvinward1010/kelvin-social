@@ -1,3 +1,4 @@
+"use client"
 import getUserById from "@/app/actions/getUserById";
 import PostItem from "./PostItem";
 import useUser from "@/app/hooks/useUser";
@@ -9,15 +10,15 @@ interface PostFeedProps {
     userId?: string;
 }
 
-const PostFeed: React.FC<PostFeedProps> = async ({userId}) => {
+const PostFeed: React.FC<PostFeedProps> = ({userId}) => {
 
-    const user = await getUserById(userId);
-    const posts = await getPosts();
+    const user =  useUser(userId as string);
+    const posts =  usePosts();
     
     return (
         <>
-            {posts.map((post: Record<string, any>) => (
-                <PostItem key={post?.id} user={user} userId={userId} data={post} />
+            {posts?.data?.map((post: Record<string, any>) => (
+                <PostItem key={post?.id} user={user?.data} userId={userId} data={post} />
             ))}
         </>
     )

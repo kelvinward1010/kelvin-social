@@ -22,6 +22,7 @@ export async function GET(
         const notifications = await prisma.notification.findMany({
             where: {
                 userId: currentUser?.id,
+
             },
             orderBy: {
                 createdAt: 'desc'

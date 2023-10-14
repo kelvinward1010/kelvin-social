@@ -47,10 +47,10 @@ export async function POST(
                 }
             });
 
-            if (post?.userId) {
+            if (post?.userId && (currentUser.id !== post.userId)) {
                 await prisma.notification.create({
                     data: {
-                        body: 'Someone liked your tweet!',
+                        body: `${currentUser?.name} liked your tweet!`,
                         userId: post.userId
                     }
                 });
