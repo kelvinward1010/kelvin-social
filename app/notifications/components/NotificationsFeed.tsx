@@ -4,6 +4,7 @@ import { BsTwitter } from "react-icons/bs";
 import { useEffect } from "react";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import useNotifications from "../../hooks/useNotifications";
+import NotificationItem from "./NofiticationItem";
 
 const NotificationsFeed = () => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
@@ -20,16 +21,13 @@ const NotificationsFeed = () => {
       </div>
     )
   }
+
+  console.log(fetchedNotifications)
   
   return ( 
     <div className="flex flex-col">
       {fetchedNotifications.map((notification: Record<string, any>) => (
-        <div key={notification.id} className="flex flex-row items-center p-6 gap-4 border-b-[1px] border-neutral-800">
-          <BsTwitter color="white" size={32} />
-          <p className="text-white">
-            {notification.body}
-          </p>
-        </div>
+        <NotificationItem key={notification?.id} data={notification}/>
         ))}
     </div>
    );
