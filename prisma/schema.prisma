@@ -24,6 +24,7 @@ model User {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   followingIds    String[] @db.ObjectId
+  followersCount  String[] @db.ObjectId
   hasNotification Boolean?
 
   conversationIds String[]       @db.ObjectId
@@ -118,7 +119,8 @@ model Notification {
   id                 String @id @default(auto()) @map("_id") @db.ObjectId 
   body               String
   userId             String @db.ObjectId
-  postId             String @db.ObjectId
+  postId             String? @db.ObjectId
+  followerId         String? @db.ObjectId
   createdAt          DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

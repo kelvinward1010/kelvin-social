@@ -3,6 +3,7 @@ import { BiCalendar } from "react-icons/bi";
 import { format } from "date-fns";
 import useCurrentUser from "@/app/hooks/useCurrentUser";
 import useUser from "@/app/hooks/useUser";
+import useFollow from "@/app/hooks/useFollow";
 import Button from "@/app/components/ButtonHome";
 
 interface UserFollowProps {
@@ -15,7 +16,7 @@ const UserFollow: React.FC<UserFollowProps> = ({ userId }) => {
 
     // const editModal = useEditModal();
 
-    // const { isFollowing, toggleFollow } = useFollow(userId);
+    const { isFollowing, toggleFollow } = useFollow(userId);
 
     const createdAt = useMemo(() => {
         if (!fetchedUser?.createdAt) {
@@ -25,20 +26,19 @@ const UserFollow: React.FC<UserFollowProps> = ({ userId }) => {
         return format(new Date(fetchedUser.createdAt), 'MMMM yyyy');
     }, [fetchedUser?.createdAt])
 
-
     return (
         <div className="border-b-[1px] border-neutral-800 pb-4">
             <div className="flex justify-end p-2">
-                {/* {currentUser?.id === userId ? (
-                    <Button secondary label="Edit" onClick={editModal.onOpen} />
-                ) : (
-                    <Button
-                        onClick={toggleFollow}
-                        label={isFollowing ? 'Unfollow' : 'Follow'}
-                        secondary={!isFollowing}
-                        outline={isFollowing}
-                    />
-                )} */}
+            {/* {currentUser?.id === userId ? (
+                <button>edit</button>
+            ): ( */}
+                <Button
+                    onClick={toggleFollow}
+                    label={isFollowing ? 'Unfollow' : 'Follow'}
+                    secondary={!isFollowing}
+                    outline={isFollowing}
+                />
+            {/* )} */}
             </div>
             <div className="mt-8 px-4">
                 <div className="flex flex-col">
@@ -74,7 +74,7 @@ const UserFollow: React.FC<UserFollowProps> = ({ userId }) => {
                         <p className="text-neutral-500">Following</p>
                     </div>
                     <div className="flex flex-row items-center gap-1">
-                        <p className="text-white">{fetchedUser?.followersCount || 0}</p>
+                        <p className="text-white">{fetchedUser?.followersCount?.length || 0}</p>
                         <p className="text-neutral-500">Followers</p>
                     </div>
                 </div>
