@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import AuthContext from './context/AuthContext'
 import ToasterContext from './context/ToasterContext'
+import EditModal from './components/modals/EditModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true} suppressContentEditableWarning={true}>
       <body className={inter.className} suppressContentEditableWarning={true}>
         <AuthContext>
+          <EditModal />
           <ToasterContext />
           {children}
         </AuthContext>

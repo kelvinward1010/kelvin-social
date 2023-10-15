@@ -21,12 +21,18 @@ const NotificationsFeed = () => {
       </div>
     )
   }
+
+  // const test = fetchedNotifications?.forEach((element: any) => {
+    
+  // });
+
+  // console.log(test)
   
   return ( 
     <div className="flex flex-col">
       {fetchedNotifications.map((notification: Record<string, any>) => (
         <NotificationItem key={notification?.id} data={notification}/>
-        ))}
+      ))}
     </div>
    );
 }

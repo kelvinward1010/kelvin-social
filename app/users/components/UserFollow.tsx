@@ -5,6 +5,7 @@ import useCurrentUser from "@/app/hooks/useCurrentUser";
 import useUser from "@/app/hooks/useUser";
 import useFollow from "@/app/hooks/useFollow";
 import Button from "@/app/components/ButtonHome";
+import useEditModal from "@/app/hooks/useEditModal";
 
 interface UserFollowProps {
     userId: string;
@@ -14,7 +15,7 @@ const UserFollow: React.FC<UserFollowProps> = ({ userId }) => {
     const { data: currentUser } = useCurrentUser();
     const { data: fetchedUser } = useUser(userId);
 
-    // const editModal = useEditModal();
+    const editModal = useEditModal();
 
     const { isFollowing, toggleFollow } = useFollow(userId);
 
@@ -29,16 +30,16 @@ const UserFollow: React.FC<UserFollowProps> = ({ userId }) => {
     return (
         <div className="border-b-[1px] border-neutral-800 pb-4">
             <div className="flex justify-end p-2">
-            {/* {currentUser?.id === userId ? (
-                <button>edit</button>
-            ): ( */}
+            {currentUser?.id === userId ? (
+                <Button secondary label="Edit" onClick={editModal.onOpen} />
+            ): (
                 <Button
                     onClick={toggleFollow}
                     label={isFollowing ? 'Unfollow' : 'Follow'}
                     secondary={!isFollowing}
                     outline={isFollowing}
                 />
-            {/* )} */}
+            )}
             </div>
             <div className="mt-8 px-4">
                 <div className="flex flex-col">

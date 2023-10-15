@@ -108,7 +108,7 @@ export async function POST(
         try {
             await prisma.notification.create({
                 data: {
-                    body: 'Someone followed you!',
+                    body: `${currentUser?.name} followed you!`,
                     userId,
                     followerId: currentUser?.id
                 },
