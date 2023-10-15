@@ -47,35 +47,14 @@ export async function GET(
         if (!currentUser?.id || !currentUser?.email) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
-        
-        // const posts = await prisma.post.findMany({
-        //     orderBy: {
-        //         createdAt: 'desc'
-        //     }
-        // });
 
         let posts;
-
-        if (currentUser?.id && typeof currentUser?.id === 'string' && params?.userId) {
-            posts = await prisma.post.findMany({
-                where: {
-                    userId: currentUser?.id
-                },
-                include: {
-                    user: true,
-                    comments: true
-                },
-                orderBy: {
-                    createdAt: 'desc'
-                },
-            });
-        } else {
-            posts = await prisma.post.findMany({
-                orderBy: {
-                    createdAt: 'desc'
-                }
-            });
-        }
+        
+        posts = await prisma.post.findMany({
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
         
 
         return NextResponse.json(posts)

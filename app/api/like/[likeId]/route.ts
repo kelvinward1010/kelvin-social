@@ -60,7 +60,7 @@ export async function POST(
     try {
         const currentUser = await getCurrentUser();
         const postId = request.url.split('/')[5] as string;
-
+        
         if (!postId || typeof postId !== 'string') {
             throw new Error('Invalid ID');
         }

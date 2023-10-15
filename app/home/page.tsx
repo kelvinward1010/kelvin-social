@@ -11,7 +11,7 @@ const HomePage = async () => {
         <div className="">
             <Header label="Home" />
             <FormCreate postId={currentUser?.id} user={currentUser} placeholder="What's happening...?"/>
-            <PostFeed userId={currentUser?.id}/>
+            <PostFeed ok={false} userId={currentUser?.id}/>
         </div>
     )
 }

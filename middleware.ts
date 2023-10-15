@@ -11,5 +11,6 @@ export const config = {
         "/home/:path*",
         "/posts/:path*",
         "/notifications/:path*",
+        "/users/:path*",
     ]
 };

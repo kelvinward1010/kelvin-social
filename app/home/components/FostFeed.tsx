@@ -8,16 +8,20 @@ import usePosts from "@/app/hooks/usePosts";
 
 interface PostFeedProps {
     userId?: string;
+    postsOfUser?: [];
+    ok?: boolean;
 }
 
-const PostFeed: React.FC<PostFeedProps> = ({userId}) => {
+const PostFeed: React.FC<PostFeedProps> = ({userId, postsOfUser, ok}) => {
 
     const user =  useUser(userId as string);
-    const posts =  usePosts();
+    const posts = usePosts();
+
+    const postAnalyst = (ok === true) ? postsOfUser : posts.data
     
     return (
         <>
-            {posts?.data?.map((post: Record<string, any>) => (
+            {postAnalyst?.map((post: Record<string, any>) => (
                 <PostItem key={post?.id} user={user?.data} userId={userId} data={post} />
             ))}
         </>
