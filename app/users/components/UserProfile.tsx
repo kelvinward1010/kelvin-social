@@ -9,7 +9,7 @@ interface UserProfileProps {
 
 const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
   const { data: fetchedUser } = useUser(userId);
-
+  console.log(fetchedUser)
   return ( 
     <div>
       <div className="bg-neutral-700 h-44 relative">
@@ -17,7 +17,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
           <Image src={fetchedUser.coverImage} fill alt="Cover Image" style={{ objectFit: 'cover' }}/>
         )}
         <div className="absolute -bottom-16 left-4">
-          <Avatar user={fetchedUser} image={fetchedUser?.image} isLarge />
+          <Avatar user={fetchedUser} image={fetchedUser?.profileImage || fetchedUser?.image} isLarge />
         </div>
       </div>
     </div>

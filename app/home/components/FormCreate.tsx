@@ -66,7 +66,7 @@ const FormCreate: React.FC<FormCreateProps> = ({
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
             <div className="flex flex-row gap-4">
                 <div>
-                    <Avatar user={user} image={user?.image}/>
+                    <Avatar user={user} image={user?.image || user?.profileImage}/>
                 </div>
                 <div className="w-full">
                     <PostInput

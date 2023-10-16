@@ -4,6 +4,7 @@ import PostItem from "./PostItem";
 import useUser from "@/app/hooks/useUser";
 import getPosts from "@/app/actions/getPosts";
 import usePosts from "@/app/hooks/usePosts";
+import Loading from "../loading";
 
 
 interface PostFeedProps {
@@ -15,9 +16,15 @@ interface PostFeedProps {
 const PostFeed: React.FC<PostFeedProps> = ({userId, postsOfUser, ok}) => {
 
     const user =  useUser(userId as string);
-    const posts = usePosts();
+    const {data: posts, isLoading} = usePosts();
 
-    const postAnalyst = (ok === true) ? postsOfUser : posts.data
+    const postAnalyst = (ok === true) ? postsOfUser : posts
+
+    if (isLoading) {
+        return (
+          <Loading />
+        )
+    }
     
     return (
         <>

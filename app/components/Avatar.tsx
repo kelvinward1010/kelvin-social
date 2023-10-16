@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import useUser from "@/app/hooks/useUser";
+import { useCallback } from "react";
 
 interface AvatarProps {
     user: any;
@@ -18,6 +19,12 @@ const Avatar: React.FC<AvatarProps> = ({
 }) => {
 
     const router = useRouter();
+
+    const goToUser = useCallback((ev: any) => {
+        ev.stopPropagation();
+
+        router.push(`/users/${user?.id || user?.data?.id}`)
+    }, [router, user?.id, user?.data?.id]);
     
     return (
         <div
@@ -31,6 +38,7 @@ const Avatar: React.FC<AvatarProps> = ({
                 cursor-pointer
                 relative
             `}
+            onClick={goToUser}
         >
             <Image
                 fill
