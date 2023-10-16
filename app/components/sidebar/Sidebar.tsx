@@ -13,9 +13,9 @@ function Sidebar (){
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="h-full">
-            <div className="flex flex-col items-end">
-                <div className="space-y-2 lg:w-[230px]">
+        <div className="h-full pl-3">
+            <div className="flex flex-col items-start">
+                <div className="lg:w-[230px]">
                     <div>
                         <SidebarLogo />
                         {routes.map((item) => (

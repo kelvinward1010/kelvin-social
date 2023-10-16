@@ -32,6 +32,7 @@ const useRoutes = () => {
         {
             label: 'Chat',
             href: '/conversations',
+            onClick: () => router.push('/conversations'),
             icon: HiChat,
             active: pathname === '/conversations'
         },
