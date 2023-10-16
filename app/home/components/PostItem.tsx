@@ -47,7 +47,6 @@ const PostItem: React.FC<PostItemProps> = ({data = {}, userId, user}) => {
         return formatDistanceToNowStrict(new Date(data.createdAt));
     }, [data.createdAt])
     
-    
     return (
         <div
             className="
