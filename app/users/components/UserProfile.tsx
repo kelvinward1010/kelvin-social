@@ -9,7 +9,7 @@ interface UserProfileProps {
 
 const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
   const { data: fetchedUser } = useUser(userId);
-  console.log(fetchedUser)
+  
   return ( 
     <div>
       <div className="bg-neutral-700 h-44 relative">

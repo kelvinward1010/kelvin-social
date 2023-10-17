@@ -7,7 +7,7 @@ import EmptyState from "../components/EmptyState";
 const Home = () => {
 
     return (
-        <div>
+        <div className="h-full">
             <EmptyState />
         </div>
     )

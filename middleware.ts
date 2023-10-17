@@ -11,6 +11,7 @@ export const config = {
         "/home/:path*",
         "/posts/:path*",
         "/notifications/:path*",
+        "/people/:path*",
         "/users/:path*",
         "/conversations/:path*",
     ]

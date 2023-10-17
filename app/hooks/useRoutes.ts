@@ -1,7 +1,7 @@
 import { signOut } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo } from "react";
-import { HiArrowLeftOnRectangle, HiHome } from 'react-icons/hi2';
+import { HiArrowLeftOnRectangle, HiHome, HiUsers } from 'react-icons/hi2';
 import { HiChat } from 'react-icons/hi';
 import useCurrentUser from "./useCurrentUser";
 import { BsBellFill } from "react-icons/bs";
@@ -28,6 +28,13 @@ const useRoutes = () => {
             onClick: () => router.push('/notifications'),
             auth: true,
             active: pathname === '/notifications'
+        },
+        {
+            label: 'People',
+            href: '/people',
+            onClick: () => router.push('/people'),
+            icon: HiUsers,
+            active: pathname === '/people'
         },
         {
             label: 'Chat',

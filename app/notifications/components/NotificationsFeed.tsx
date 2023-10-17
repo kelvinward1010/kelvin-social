@@ -17,7 +17,9 @@ const NotificationsFeed = () => {
 
   if (fetchedNotifications.length === 0) {
     return (
-      <Loading />
+      <>
+        No notifications found
+      </>
     )
   }
   
