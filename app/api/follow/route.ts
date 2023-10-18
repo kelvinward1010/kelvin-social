@@ -15,6 +15,8 @@ export async function POST(
         const currentUser = await getCurrentUser();
         const userId = request.url;
 
+        //console.log(userId)
+
         if (!userId || typeof userId !== 'string') {
             throw new Error('Invalid ID');
         }
@@ -33,48 +35,45 @@ export async function POST(
             throw new Error('Invalid ID');
         }
 
-        let updatedFollowIds = [...(user.followingIds || [])];
-        updatedFollowIds.push(currentUser?.id);
+        let updatedFollowersIds = [...(user.followersCount || [])];
+        updatedFollowersIds.push(currentUser.id);
 
+        let updatedFollowingsIds = [...(user.followingIds || [])];
+        updatedFollowingsIds.push(user.id);
+
+        // NOTIFICATION PART START
         try {
-            const user = await prisma.user.findUnique({
-                where: {
-                    id: userId,
-                }
+            await prisma.notification.create({
+                data: {
+                    body: `${currentUser?.name} followed you!`,
+                    userId,
+                    followerId: currentUser?.id
+                },
             });
 
-            if (user?.id && (currentUser.id !== user.id)) {
-                await prisma.notification.create({
-                    data: {
-                        body: `${currentUser?.name} followed your tweet!`,
-                        userId: user?.id,
-                        followerId: currentUser?.id,
-                    }
-                });
-
-                await prisma.user.update({
-                    where: {
-                        id: user?.id
-                    },
-                    data: {
-                        hasNotification: true
-                    }
-                });
-            }
+            await prisma.user.update({
+                where: {
+                    id: userId,
+                },
+                data: {
+                    hasNotification: true,
+                    followersCount: updatedFollowersIds
+                }
+            });
         } catch (error) {
             console.log(error);
         }
 
-        const updatedFollow = await prisma.user.update({
+        const updatedUser = await prisma.user.update({
             where: {
-                id: currentUser.id
+                id: currentUser?.id
             },
             data: {
-                followingIds: updatedFollowIds
+                followingIds: updatedFollowingsIds
             }
         });
 
-        return NextResponse.json(updatedFollow)
+        return NextResponse.json(updatedUser)
     } catch (error) {
         console.log(error, 'ERROR_MESSAGES')
         return new NextResponse('Error', { status: 500 });

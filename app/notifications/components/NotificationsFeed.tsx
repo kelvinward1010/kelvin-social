@@ -9,7 +9,7 @@ import Loading from "../loading";
 
 const NotificationsFeed = () => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
-  const { data: fetchedNotifications = [] } = useNotifications(currentUser?.id);
+  const { data: fetchedNotifications = [], isLoading } = useNotifications(currentUser?.id);
 
   useEffect(() => {
     mutateCurrentUser();
@@ -17,9 +17,15 @@ const NotificationsFeed = () => {
 
   if (fetchedNotifications.length === 0) {
     return (
-      <>
-        No notifications found
-      </>
+      <div className="h-full flex justify-center items-center text-gray-500 text-3xl">
+        You don't have any notification!!
+      </div>
+    )
+  }
+
+  if(isLoading) {
+    return (
+      <Loading />
     )
   }
   

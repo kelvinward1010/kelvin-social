@@ -1,8 +1,10 @@
+"use client"
 import Avatar from "@/app/components/Avatar";
 import Button from "@/app/components/ButtonHome";
+import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 
 
@@ -21,6 +23,17 @@ const PeopleBox: React.FC<PeopleBoxProps> = ({user}) => {
 
     },[])
 
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleClick = useCallback(() => {
+        setIsLoading(true);
+
+        axios.post('/api/conversations', { userId: user?.id })
+            .then((data) => {
+                router.push(`/conversations/${user?.id}`);
+            })
+            .finally(() => setIsLoading(false));
+    }, [user, router]);
     
 
     return (
@@ -63,7 +76,7 @@ const PeopleBox: React.FC<PeopleBoxProps> = ({user}) => {
                         flex-row
                     "
                 >
-                    <Button secondary label="Follow" onClick={() => {}} />
+                    <Button secondary label="See" onClick={() => router.push(`/users/${user?.id}`)} />
                     <Button secondary label="Message" onClick={() => {}} />
                 </div>
             </div>

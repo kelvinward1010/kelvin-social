@@ -9,7 +9,7 @@ const PeopleList = () => {
 
     return (
         <div className="p-5">
-            <div className="flex flex-row">
+            <div className="flex flex-row flex-wrap">
                 {people?.map((item: Record<string, any>) => (
                     <PeopleBox key={item?.id} user={item}/>
                 ))}
