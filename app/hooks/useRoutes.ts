@@ -5,6 +5,7 @@ import { HiArrowLeftOnRectangle, HiHome, HiUsers } from 'react-icons/hi2';
 import { HiChat } from 'react-icons/hi';
 import useCurrentUser from "./useCurrentUser";
 import { BsBellFill } from "react-icons/bs";
+import { AiFillReconciliation, AiFillSliders } from "react-icons/ai";
 
 
 
@@ -28,6 +29,20 @@ const useRoutes = () => {
             onClick: () => router.push('/notifications'),
             auth: true,
             active: pathname === '/notifications'
+        },
+        {
+            label: 'Pipline',
+            href: '/pipline',
+            onClick: () => router.push('/pipline'),
+            icon: AiFillSliders,
+            active: pathname === '/pipline'
+        },
+        {
+            label: 'Projects',
+            href: '/projects',
+            onClick: () => router.push('/projects'),
+            icon: AiFillReconciliation,
+            active: pathname === '/projects'
         },
         {
             label: 'People',

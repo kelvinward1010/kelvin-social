@@ -14,5 +14,7 @@ export const config = {
         "/people/:path*",
         "/users/:path*",
         "/conversations/:path*",
+        "/projects/:path*",
+        "/pipline/:path*",
     ]
 };
