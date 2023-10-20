@@ -77,7 +77,7 @@ const PeopleBox: React.FC<PeopleBoxProps> = ({user}) => {
                     "
                 >
                     <Button secondary label="See" onClick={() => router.push(`/users/${user?.id}`)} />
-                    <Button secondary label="Message" onClick={() => {}} />
+                    <Button secondary label="Message" onClick={() => handleClick()} />
                 </div>
             </div>
         </div>

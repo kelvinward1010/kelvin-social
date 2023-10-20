@@ -27,8 +27,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
     const [items, setItems] = useState(initialItems);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    console.log(items)
-
     const router = useRouter();
     const session = useSession();
 
@@ -49,9 +47,9 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
-            <aside >
+            <aside>
                 <div className="px-5">
-                    <div className="flex justify-between mb-4 pt-4">
+                    <div className="flex items-center justify-between mb-4 pt-4">
                         <BiArrowBack
                             onClick={handleBack}
                             color="skyblue"

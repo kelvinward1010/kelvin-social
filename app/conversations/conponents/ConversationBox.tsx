@@ -69,12 +69,13 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         <div
             onClick={handleClick}
             className={clsx(`
-                w-full 
+                w-52 
                 relative 
                 flex 
                 items-center 
                 space-x-3 
-                p-3 
+                p-3
+                pr-5 
                 hover:bg-neutral-100
                 rounded-lg
                 transition

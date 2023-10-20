@@ -15,7 +15,7 @@ export default async function ConversationsLayout({
 
     return (
         <LayoutHome>
-            <div className="h-full">
+            <div className="h-full flex flex-row">
                 <ConversationList 
                     users={users}
                     title="Messages"
