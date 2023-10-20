@@ -112,6 +112,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
                         className={clsx(`
                             truncate 
                             text-sm
+                            line-clamp-1
                             `,
                             hasSeen ? 'text-gray-500' : 'text-black font-medium'
                         )}>
