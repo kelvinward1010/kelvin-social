@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
                     {conversation.isGroup ? (
                         <AvatarGroup users={conversation.users} />
                     ) : (
-                        <Avatar user={otherUser} />
+                        <Avatar user={otherUser} image={otherUser?.image || otherUser?.profileImage}/>
                     )}
                     <div className="flex flex-col">
                         <div>{conversation?.name || otherUser?.name}</div>

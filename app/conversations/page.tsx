@@ -2,11 +2,10 @@
 
 import clsx from "clsx";
 
-import EmptyState from "../components/EmptyState";
 import useConversation from "../hooks/useConversation";
+import EmptyState from "../components/EmptyState";
 
 const Home = () => {
-
     const { isOpen } = useConversation();
 
     return (

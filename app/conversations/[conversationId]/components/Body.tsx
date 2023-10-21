@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 
-// import { pusherClient } from "@/app/libs/pusher";
+import { pusherClient } from "@/app/libs/pusher";
 import useConversation from "@/app/hooks/useConversation";
 import MessageBox from "./MessageBox";
 import { FullMessageType } from "@/app/types";
@@ -63,7 +63,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     // }, [conversationId]);
 
     return (
-        <div className="flex-1 bg-white overflow-y-auto">
+        <div className="flex-1 overflow-y-auto">
             {messages.map((message, i) => (
                 <MessageBox
                     isLast={i === messages.length - 1}

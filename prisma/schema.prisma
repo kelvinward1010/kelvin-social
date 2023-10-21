@@ -65,10 +65,6 @@ model Conversation {
   lastMessageAt DateTime @default(now())
   name          String?
   username      String?
-  bio           String?
-  coverImage    String?
-  profileImage  String?
-  image         String?
   isGroup       Boolean?
 
   messagesIds String[]  @db.ObjectId

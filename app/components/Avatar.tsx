@@ -8,7 +8,7 @@ interface AvatarProps {
     user: any;
     isLarge?: boolean;
     hasBorders?: boolean;
-    image?: string;
+    image?: string | null;
 }
 
 const Avatar: React.FC<AvatarProps> = ({

@@ -15,8 +15,6 @@ interface PeopleBoxProps {
 
 const PeopleBox: React.FC<PeopleBoxProps> = ({user}) => {
 
-    console.log(user)
-
     const router = useRouter()
 
     const goMessage = useCallback((ev: any) => {

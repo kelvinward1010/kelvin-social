@@ -69,7 +69,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         <div
             onClick={handleClick}
             className={clsx(`
-                w-52 
+                w-72 
                 relative 
                 flex 
                 items-center 
@@ -80,6 +80,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
                 rounded-lg
                 transition
                 cursor-pointer
+                mb-2
                 `,
                 selected ? 'bg-neutral-100' : 'bg-white'
             )}
@@ -87,13 +88,13 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
             {data.isGroup ? (
                 <AvatarGroup users={data.users} />
             ) : (
-                <Avatar user={otherUser} />
+                <Avatar user={otherUser} image={otherUser?.image || otherUser?.profileImage}/>
             )}
             <div className="min-w-0 flex-1">
                 <div className="focus:outline-none">
                     <span className="absolute inset-0" aria-hidden="true" />
                     <div className="flex justify-between items-center mb-1">
-                        <p className="text-md font-medium text-gray-900">
+                        <p className="text-md font-medium text-gray-900 line-clamp-1">
                             {data.name || otherUser.name}
                         </p>
                         {lastMessage?.createdAt && (
