@@ -1,8 +1,7 @@
 "use client"
-import getUserById from "@/app/actions/getUserById";
+
 import PostItem from "./PostItem";
 import useUser from "@/app/hooks/useUser";
-import getPosts from "@/app/actions/getPosts";
 import usePosts from "@/app/hooks/usePosts";
 import Loading from "../loading";
 
