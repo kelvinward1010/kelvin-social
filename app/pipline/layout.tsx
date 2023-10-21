@@ -1,4 +1,4 @@
-import LayoutHome from "../components/LayoutHome"
+import LayoutOther from "../components/LayoutOther"
 
 
 export default function PiplineLayout({
@@ -7,8 +7,8 @@ export default function PiplineLayout({
     children: React.ReactNode
 }){
     return (
-        <LayoutHome>
+        <LayoutOther>
             {children}
-        </LayoutHome>
+        </LayoutOther>
     )
 }
