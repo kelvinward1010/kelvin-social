@@ -25,7 +25,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
     initialItems,
     users
 }) => {
-    const [items, setItems] = useState(initialItems);
+    // const [items, setItems] = useState(initialItems);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const router = useRouter();
@@ -91,7 +91,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
             />
             <aside>
                 <div className="px-5">
-                    <div className="flex items-center justify-between mb-4 pt-4">
+                    <div className="flex items-center justify-between mb-4 pt-4 w-72">
                         <BiArrowBack
                             onClick={handleBack}
                             color="skyblue"
@@ -116,7 +116,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                             <MdOutlineGroupAdd size={20} />
                         </div>
                     </div>
-                    {items.map((item) => (
+                    {initialItems?.map((item) => (
                         <ConversationBox
                             key={item.id}
                             data={item}

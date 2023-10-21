@@ -55,7 +55,7 @@ const FormCreate: React.FC<FormCreateProps> = ({
             mutatePosts();
             mutatePost();
         }).catch((error) => {
-            toast.error("Something went wrong")
+            toast.error("Something went wrong", error)
         }).finally(() => {
             setIsLoading(false);
             toast.success(`${isComment ? 'Comment' : 'Post'} has been created successfully`)

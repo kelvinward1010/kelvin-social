@@ -25,13 +25,33 @@ export async function DELETE(
                 id: conversationId
             },
             include: {
-                users: true
+                users: true,
+                messages: true
             }
         });
 
         if (!existingConversation) {
             return new NextResponse('Invalid ID', { status: 400 });
         }
+
+        let updatedConversation = [...(currentUser?.conversationIds || [])];
+        updatedConversation = updatedConversation.filter((id) => id !== conversationId)
+        
+        let updatedMessage = [...(currentUser?.seenMessageIds || [])];
+        
+        existingConversation?.messages?.forEach((message) => {
+            updatedMessage = updatedMessage.filter((id) => id !== message.id)
+        })
+
+        await prisma.user.update({
+            where: {
+                id: currentUser?.id,
+            },
+            data: {
+                conversationIds: updatedConversation,
+                seenMessageIds: updatedMessage
+            }
+        });
 
         const deletedConversation = await prisma.conversation.deleteMany({
             where: {
@@ -49,6 +69,33 @@ export async function DELETE(
         // });
 
         return NextResponse.json(deletedConversation)
+    } catch (error) {
+        return NextResponse.json(null);
+    }
+}
+
+
+export async function GET(
+    request: Request,
+    { params }: { params: IParams }
+) {
+    try {
+        const currentUser = await getCurrentUser();
+
+        if (!currentUser?.email) {
+            return null;
+        }
+
+        const conversation = await prisma.conversation.findUnique({
+            where: {
+                id: params?.conversationId
+            },
+            include: {
+                users: true,
+            },
+        });
+
+        return NextResponse.json(conversation);
     } catch (error) {
         return NextResponse.json(null);
     }

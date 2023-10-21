@@ -6,7 +6,7 @@ import PostFeed from "./components/FostFeed";
 
 const HomePage = async () => {
     const currentUser = await getCurrentUser();
-
+    
     return (
         <div className="">
             <Header label="Home" />

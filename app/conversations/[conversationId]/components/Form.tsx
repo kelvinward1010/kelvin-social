@@ -13,9 +13,15 @@ import {
 import axios from "axios";
 import { CldUploadButton } from "next-cloudinary";
 import useConversation from "@/app/hooks/useConversation";
+import useMessage from "@/app/hooks/useMessage";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Form = () => {
+
+    const [isLoading, setIsLoading] = useState(false);
     const { conversationId } = useConversation();
+    const { mutate: mutateMessage } = useMessage(conversationId);
 
     const {
         register,
@@ -31,17 +37,34 @@ const Form = () => {
     });
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        setIsLoading(true);
         setValue('message', '', { shouldValidate: true });
         axios.post('/api/messages', {
             ...data,
             conversationId: conversationId
+        }).then(() => {
+            mutateMessage()
+        }).catch((error) => {
+            toast.error("Something went wrong", error)
+        }).finally(() => {
+            setIsLoading(false);
+            toast.success(`Your message has been send!`)
         })
     }
 
     const handleUpload = (result: any) => {
+        
+        setIsLoading(true);
         axios.post('/api/messages', {
             image: result.info.secure_url,
             conversationId: conversationId
+        }).then(() => {
+            mutateMessage()
+        }).catch((error) => {
+            toast.error("Something went wrong", error)
+        }).finally(() => {
+            setIsLoading(false);
+            toast.success(`Your message has been send!`)
         })
     }
 
