@@ -77,8 +77,6 @@ function ColumnContainer({
         )
     }
 
-    console.log(tasks)
-
     return(
         <div 
             ref={setNodeRef}
